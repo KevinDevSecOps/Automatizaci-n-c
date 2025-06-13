@@ -37,3 +37,5 @@ gcc test.c main.o -o test_programa
 - Tener instalado `gcc` y `cppcheck` para compilar y analizar el código.
 
 ---
+
+Hecho con ❤️ por [KevinDevSecOps](https://github.com/KevinDevSecOps)

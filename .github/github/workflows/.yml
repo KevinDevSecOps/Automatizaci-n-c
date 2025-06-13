@@ -1,0 +1,36 @@
+name: C CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar el repositorio
+      uses: actions/checkout@v4
+
+    - name: Instalar dependencias
+      run: sudo apt-get update && sudo apt-get install -y build-essential cppcheck
+
+    - name: Chequeo de estilo y análisis estático
+      run: cppcheck --enable=all --inconclusive --error-exitcode=1 .
+
+    - name: Compilar el código principal
+      run: gcc main.c -o programa
+
+    - name: Compilar y ejecutar pruebas
+      run: |
+        gcc -c main.c
+        gcc test.c main.o -o test_programa
+        ./test_programa
+
+    - name: Subir artefacto compilado
+      uses: actions/upload-artifact@v4
+      with:
+        name: programa-compilado
+        path: programa
